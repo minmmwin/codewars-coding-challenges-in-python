@@ -1,0 +1,41 @@
+DESCRIPTION:
+Filter Rows From DataFrames That Don't Satisfy Condition
+Input parameters
+dataframe: pandas.DataFrame object
+col: target column
+func: filter function
+Task
+Your function must return a new pandas.DataFrame object with the same columns as the original input. However, include only the rows whose cell values in the designated column evaluate to False by func.
+
+Input DataFrame will never be empty. The target column will always be one of the dataframe columns. Filter function will be a valid one. Index value must remain the same.
+
+Examples
+Input
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  6  3  2
+3  1  1  7
+
+col = "A"
+func = lambda x: x<=2
+Output
+   A  B  C
+1  4  5  6
+2  6  3  2
+
+SOLUTION in Python:
+import pandas as pd
+import numpy as np
+
+def filter_dataframe(df, col, func): 
+    if col not in df.columns:
+        raise ValueError(f"Column '{col}' is not present in the DataFrame.")
+    # your code here
+    return df.loc[np.bitwise_not(df[col].apply(func))]
+    
+
+df = pd.DataFrame(data=[[1,2,3], [4,5,6], [6,3,2], [1,1,7]], columns=list('ABC'))
+column = 'A'
+func = lambda x: x<=2
+print(filter_dataframe(df, column, func))
